@@ -1,0 +1,102 @@
+
+
+; Sample runset for 180 nm NMOS
+; technology
+; ASSURA(r) version 3.1.6 LVS file
+; PDK versino 3.3
+
+
+;Layer operation
+drcExtractRules(
+
+layerDefs("GDS2"
+	Nimp=layer( 4 type(0) )
+	Oxide=layer( 1 type(0) )
+	Poly=layer( 3 type(0) )
+	Pimp=layer( 5 type(0) )
+	Cont=layer( 6 type(0) )
+	Metal1_d=layer( 7 type(0) )
+	Metal1_pin=pinLayer( 7 type(0) )
+	Metal1_text=textToPin( 7 type(3) )
+	Metal1_pintext=text( 7 type(3) )
+	bulk=cellBoundary(root)
+)
+
+layerDefs("df2"
+	Nimp=layer("Nimp" type("drawing"))
+	Oxide=layer("Oxide" type("drawing"))
+	Poly=layer("Poly" type("drawing"))
+	Pimp=layer("Pimp" type("drawing"))
+	Cont=layer("Cont" type("drawing"))
+	Metal1_d=layer("Metal1" type("drawing"))
+	Metal1_pin=pinLayer("Metal1")
+	Metal1_text=textToPin("Metal1" type("label"))
+	Metal1_pintext=pinText("Metal1")
+	bulk=cellBoundary(root)
+)
+
+; Define seed layer -- NMOS
+
+
+; PPLUS=Pimp and Oxide
+PPLUS=geomAnd(Oxide Pimp)
+
+; PSDterm=PPLUS andnot Poly
+PSDterm=geomAndNot(PPLUS Poly)
+
+; SUBVIA=(bulk and PSDterm) 
+SUBVIA=geomAnd(bulk PSDterm)
+
+; NMOS=Poly and NPLUS 
+; NPLUS=Nimp and Oxide
+NPLUS=geomAnd(Nimp Oxide)
+NMOS=geomAnd(Poly NPLUS)
+
+; Deefine NSDterm
+; NSDterm=NPLUS andnot Poly
+NSDterm=geomAndNot(NPLUS Poly)
+
+; POLYcont=Cont and Poly
+POLYcont=geomAnd(Cont Poly)
+
+; NSDcont=Cont and NPLUS
+NSDcont=geomAnd(Cont NPLUS)
+
+; PSDcont=Cont and PPLUS
+PSDcont=geomAnd(Cont PPLUS)
+
+
+;Connectivity
+geomConnect(
+	via(POLYcont Metal1_d Poly)
+	via(NSDcont Metal1_d NSDterm)
+	via(PSDcont Metal1_d PSDterm)
+	label(Metal1_text Metal1_d)
+	label(Metal1_pintext Metal1_d)
+)
+geomStamp(SUBVIA PSDterm error)
+geomStamp(bulk SUBVIA error)
+
+; Define NMOS
+extractMOS("nmos" NMOS Poly("G") NSDterm("S" "D") bulk("B")
+    cellView("nmos ivpcell gpdk180") flagMalformed)
+width=measureParameter(length (NMOS butting NSDterm) 0.5)
+length=measureParameter(length (NMOS outside NSDterm) 0.5)F
+w=calculateParameter(width*1e-6)
+attachParameter(w "w" NMOS)
+fw=calculateParameter(width*1e-6)
+attachParameter(fw "fw" NMOS)
+simW=calculateParameter(width*1e-6)
+attachParameter(simW "simW" NMOS)
+l=calculateParameter(length*1e-6)
+attachParameter(l "l" NMOS)
+sd_area=measureParameter(area (NSDterm))
+sd_perimeter=measureParameter(perimeter (NSDterm))
+sdarea=calculateParameter(sd_area*1.0e-12)
+sdperimeter=calculateParameter(sd_perimeter*1.0e-6)
+attachParameter(sdarea ("as" "S")("ad" "D") NMOS shared)
+attachParameter(sdperimeter ("ps" "S")("pd" "D") NMOS shared)
+
+
+
+
