@@ -1,0 +1,94 @@
+; Sample runset for 180 nm
+; technology
+; ASSURA(r) version 3.1.6 LVS file
+; PDK versino 3.3
+
+;Layer operation
+drcExtractRules(
+
+layerDefs("GDS2"
+	Nimp=layer( 4 type(0) )
+	Nwell=layer( 2 type(0) )
+	Oxide=layer( 1 type(0) )
+	Poly=layer( 3 type(0) )
+	Pimp=layer( 5 type(0) )
+	Cont=layer( 6 type(0) )
+	Metal1_d=layer( 7 type(0) )
+	Metal1_pin=pinLayer( 7 type(0) )
+	Metal1_text=textToPin( 7 type(3) )
+	Metal1_pintext=text( 7 type(3) )
+)
+
+layerDefs("df2"
+	Nwell=layer("Nwell" type("drawing"))
+	Nimp=layer("Nimp" type("drawing"))
+	Oxide=layer("Oxide" type("drawing"))
+	Poly=layer("Poly" type("drawing"))
+	Pimp=layer("Pimp" type("drawing"))
+	Cont=layer("Cont" type("drawing"))
+	Metal1_d=layer("Metal1" type("drawing"))
+	Metal1_pin=pinLayer("Metal1")
+	Metal1_text=textToPin("Metal1" type("label"))
+	Metal1_pintext=pinText("Metal1")
+)
+
+; Deefine NSDterm
+; NPLUS=Nimp and Oxide
+NPLUS=geomAnd(Nimp Oxide)
+; NSDterm=NPLUS andnot Poly
+NSDterm=geomAndNot(NPLUS Poly)
+
+; Deefine PSDterm
+; PPLUS=Pimp and Oxide
+PPLUS=geomAnd(Oxide Pimp)
+; PSDterm=PPLUS andnot Poly
+PSDterm=geomAndNot(PPLUS Poly)
+
+; PMOS=Poly and Nwell and PPLUS 
+L56230=geomAnd(Poly Nwell)
+PMOS=geomAndNot(L56230 Capdum)
+
+;Define Via/contact
+; POLYcont=Cont and Poly
+POLYcont=geomAnd(Cont Poly)
+
+; NSDcont=Cont and NPLUS
+NSDcont=geomAnd(Cont NPLUS)
+
+; PSDcont=Cont and PPLUS
+PSDcont=geomAnd(Cont PPLUS)
+
+; NWVIA=NSDterm and Nwell
+NWVIA=geomAnd(NSDterm Nwell)
+
+;Connectivity
+geomConnect(
+	via(POLYcont Metal1_d Poly)
+	via(NSDcont Metal1_d NSDterm)
+	via(PSDcont Metal1_d PSDterm)
+	label(Metal1_text Metal1_d)
+	label(Metal1_pintext Metal1_d)
+)
+
+geomStamp(Nwell NWVIA error)
+
+
+;Define device---- PMOS
+extractMOS("pmos" PMOS Poly("G") PSDterm("S" "D") Nwell("B")
+    cellView("pmos ivpcell gpdk180") flagMalformed)
+width=measureParameter(length (PMOS butting PSDterm) 0.5)
+length=measureParameter(length (PMOS outside PSDterm) 0.5)
+w=calculateParameter(width*1e-6)
+attachParameter(w "w" PMOS)
+fw=calculateParameter(width*1e-6)
+attachParameter(fw "fw" PMOS)
+simW=calculateParameter(width*1e-6)
+attachParameter(simW "simW" PMOS)
+l=calculateParameter(length*1e-6)
+attachParameter(l "l" PMOS)
+sd_area=measureParameter(area (PSDterm))
+sd_perimeter=measureParameter(perimeter (PSDterm))
+sdarea=calculateParameter(sd_area*1.0e-12)
+sdperimeter=calculateParameter(sd_perimeter*1.0e-6)
+attachParameter(sdarea ("as" "S")("ad" "D") PMOS shared)
+attachParameter(sdperimeter ("ps" "S")("pd" "D") PMOS shared)
