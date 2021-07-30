@@ -66,3 +66,4 @@
 #### Run DRC/LVS ruldeck 
 * Foe LVS, in the terminal type `calibre -lvs file_name`
 * Foe DRC, in the terminal type `calibre -drc file_name`(.cdl is not needed for DRC)
+* [Type Here](https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/nmos/cmd_run/nmos.lvs) to refer the ruledeck
