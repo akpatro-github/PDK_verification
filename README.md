@@ -50,13 +50,18 @@
 * Go to `File -> Export -> Stream` in CIW -> `Streamout from Disk` -> `Okay, Then give the layout information and You will get a GDS II format.
 
 * Mention your .cdl and .gds path in Rule Deck file as follows
+
 `LAYOUT PRIMARY "test_nmos_nf"`
+
 `LAYOUT PATH "test_nmos.calibre.db"`
+
 `LAYOUT SYSTEM GDSII`
 
 `SOURCE PRIMARY "test_nmos_nf"`
+
 `SOURCE PATH "test_nmos.src.cdl"`
-`SOURCE SYSTEM SPICE``
+
+`SOURCE SYSTEM SPICE`
 
 #### Run DRC/LVS ruldeck 
 * Foe LVS, in the terminal type `calibre -lvs file_name`
