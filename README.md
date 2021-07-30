@@ -51,11 +51,11 @@
 
 * Mention your .cdl and .gds path in Rule Deck file as follows
 `LAYOUT PRIMARY "test_nmos_nf"`
-'LAYOUT PATH "test_nmos.calibre.db"'
-'LAYOUT SYSTEM GDSII'
+`LAYOUT PATH "test_nmos.calibre.db"`
+`LAYOUT SYSTEM GDSII`
 
-'SOURCE PRIMARY "test_nmos_nf"'
-'SOURCE PATH "test_nmos.src.cdl"`
+`SOURCE PRIMARY "test_nmos_nf"`
+`SOURCE PATH "test_nmos.src.cdl"`
 `SOURCE SYSTEM SPICE``
 
 #### Run DRC/LVS ruldeck 
