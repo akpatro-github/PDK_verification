@@ -29,7 +29,7 @@
 	-  `o` - for the via.
 	-  `q` - To see the property.
 
-## Verification of Your layout
+## Verification 
 ### DRC Verification
 * Click `Calibre->Drc` in the layout window for DRC verification.
 * A  DRC window will pop-up . Click `Rules` in the left side pannel and set the DRC rule deck & Run directory path.
@@ -38,3 +38,26 @@
 * Click `Calibre->Lvs` in the layout window for LVS verification.
 * A  LVS window will pop-up . Click `Rules` in the left side pannel and set the LVS rule deck & Run directory path.
 * To run LVS click `Run` and check all the rules.
+
+## Verification using batch mode
+* For Verification need 3 files
+	- .cdl format of Schematic
+	- .gds format of layout
+	- DRC/LVS Rule deck
+### Creation of .cdl
+* Go to `File -> Export -> .cdl` in  CIW, Then give the input files(top cell and schematic) & Output Dirctory -> Run it
+### Creation of .gds
+* Go to `File -> Export -> Stream` in CIW -> `Streamout from Disk` -> `Okay, Then give the layout information and You will get a GDS II format.
+
+* Mention your .cdl and .gds path in Rule Deck file as follows
+`LAYOUT PRIMARY "test_nmos_nf"
+LAYOUT PATH "test_nmos.calibre.db"
+LAYOUT SYSTEM GDSII
+
+SOURCE PRIMARY "test_nmos_nf"
+SOURCE PATH "test_nmos.src.net"
+SOURCE SYSTEM SPICE`
+
+#### Run DRC/LVS ruldeck 
+* Foe LVS, in the terminal type `calibre -lvs file_name`
+* Foe DRC, in the terminal type `calibre -drc file_name`(.cdl is not needed for DRC)
