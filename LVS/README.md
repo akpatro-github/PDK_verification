@@ -16,9 +16,9 @@
 |:--:|
 |*Figure 2: Setup*|
 ### Device
-|<img title="Define Devise" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/device.png">|
+|<img title="Define Device" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/device.png">|
 |:--:|
-|*Figure 3: Devise Defined*|
+|*Figure 3: Device Defined*|
 ### Layers and Layer Operations
 |<img title="Define layer" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/layer.png">|
 |:--:|
