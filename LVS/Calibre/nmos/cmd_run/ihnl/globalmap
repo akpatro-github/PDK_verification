@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ROD/test_nmos_nf/schematic test_nmos_nf
+$endmodel
+$net
+$endnet
+$param
+$endparam

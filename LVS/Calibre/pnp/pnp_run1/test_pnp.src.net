@@ -1,0 +1,28 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ROD
+* Top Cell Name: test_pnp
+* View Name:     schematic
+* Netlisted on:  Jul 28 21:21:49 2021
+************************************************************************
+
+.INCLUDE  /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/../Calibre/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ROD
+* Cell Name:    test_pnp
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT test_pnp Vb Vc Ve
+*.PININFO Vb:B Vc:B Ve:B
+QQ0 Vc Vb Ve pnp5 area=2.5e-11 $l=5u $w=5u m=3
+.ENDS
+

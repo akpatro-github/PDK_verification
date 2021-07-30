@@ -1,0 +1,65 @@
+VARIABLE  DIO_Aerr  	0
+
+//Layer
+LAYER NW              3  //  N-Well
+LAYER ODI             6  //  Active area, thin oxide for device, or interconnection
+LAYER PP              25  //  P+ S/D Implant
+LAYER NP              26  //  N+ S/D Implant
+LAYER CO              30  //  Contact Window
+LAYER M1i             31  //  M1
+LAYER DIODMYi         119  //  dummy layer to form diode
+
+
+diff = ODI INTERACT CO 
+
+//Form BULK layer
+DRC:1 = EXTENT
+BULK  = SIZE DRC:1 BY 0.005
+//***** Define connectivity/via layer -- psub ****
+psub = BULK NOT NW 
+
+//* Define device --- tpdiff
+nthin = diff AND NP 
+tndiff1 = copy nthin  
+nplug1 = tndiff1 AND NW
+pthin = diff AND PP  //  define P+ thin oxide
+tpdiff1 = copy pthin // define P+ diffusion region
+plug_sel1 = tndiff1 OR tpdiff1 
+tioda = diff NOT tpdiff1 
+tiod = tioda NOT tndiff1 
+plug_sel2 = plug_sel1 OR tiod 
+plug_sel = plug_sel2 INTERACT CO  //  plug select layers
+nplug2 = nplug1 AND plug_sel 
+nplug_dmy = nplug1 NOT nplug2 
+tndiff_dmy = tndiff1 INTERACT nplug_dmy 
+tndiff = tndiff1 NOT tndiff_dmy 
+pplug1 = tpdiff1 AND psub 
+pplug2 = pplug1 AND plug_sel 
+pplug_dmy = pplug1 NOT pplug2 
+tpdiff_dmy = tpdiff1 INTERACT pplug_dmy 
+tpdiff = tpdiff1 NOT tpdiff_dmy  //Source and drain terminal of pmos
+pdio1 = tpdiff AND DIODMYi
+cpdio = pdio1 AND NW
+nplug = copy nplug2
+// Device 
+DEVICE D(pdio) cpdio tpdiff NW netlist model pdio
+  TRACE PROPERTY D(pdio) A A DIO_Aerr
+
+//****** connect the layers*******
+CONNECT M1 tpdiff BY p_odCont
+CONNECT M1 tndiff BY n_odCont
+
+CONNECT  tndiff NW BY nplug
+
+//*****Definr connectivity/Via layer -- odCont ***
+odCont = CO INTERACT ODI 
+//***** Define connectivity/via layer -- p_odCont & n_odCont ****
+p_odCont = odCont AND PP 
+n_odCont = odCont NOT p_odCont 
+
+//* Define device -- M1
+M1 = M1i OR CO 
+
+//******* Text layer *******
+TEXT LAYER 131 ATTACH 131 M1
+PORT LAYER TEXT 131

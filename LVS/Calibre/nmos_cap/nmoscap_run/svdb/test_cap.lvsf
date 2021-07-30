@@ -1,0 +1,13 @@
+# Automagically generated file: Please do not edit!
+lvs_LvsOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos_cap/nmoscap_run1
+lvs_LvsfVersion 4
+lvs_LvsInputSummary {0 0 0}
+lvs_LvsComparisonSummary {3 0 0 0}
+lvs_SourceCase NO
+lvs_LayoutCase NO
+lvs_PowerName POWER_NAME
+lvs_GroundName GROUND_NAME
+lvs_LvsOutFile LVS_REPORT test_cap.lvs.report
+lvs_LvsOutFile SOURCE_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos_cap/nmoscap_run1/test_cap.src.net
+lvs_LvsOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos_cap/nmoscap_run1/_nmos_cap.lvs_
+lvs_LvsRunTimes 1627451722 1627451722

@@ -1,0 +1,11 @@
+# Automagically generated file: Please do not edit!
+lvs_LvsOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pnp/pnp_run1
+lvs_LvsfVersion 4
+lvs_LvsInputSummary {0 0 0}
+lvs_LvsComparisonSummary {3 0 0 0}
+lvs_SourceCase NO
+lvs_LayoutCase NO
+lvs_LvsOutFile LVS_REPORT test_pnp.lvs.report
+lvs_LvsOutFile SOURCE_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pnp/pnp_run1/test_pnp.src.net
+lvs_LvsOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pnp/pnp_run1/_pnp.lvs_
+lvs_LvsRunTimes 1627487510 1627487510

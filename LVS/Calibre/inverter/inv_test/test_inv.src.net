@@ -1,0 +1,29 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ROD
+* Top Cell Name: test_inv
+* View Name:     schematic
+* Netlisted on:  Jul 23 13:20:19 2021
+************************************************************************
+
+.INCLUDE  /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/../Calibre/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ROD
+* Cell Name:    test_inv
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT test_inv GND VDD Vin Vout
+*.PININFO Vin:I Vout:O GND:B VDD:B
+MM0 Vout Vin GND GND nch_18_mac l=150n w=320n m=1 nf=1
+MM1 Vout Vin VDD VDD pch_18_mac l=150n w=320n m=1 nf=1
+.ENDS
+

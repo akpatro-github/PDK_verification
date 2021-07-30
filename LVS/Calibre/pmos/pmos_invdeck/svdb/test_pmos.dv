@@ -1,0 +1,11 @@
+# CALIBRE-LVS DISCREPANCY VIEWER TCL FILE 
+# FILE: svdb/test_pmos.dv
+dv_start unmatched                                
+dv_cell {test_pmos} {test_pmos} unmatched
+dv_obj_count -transformed_nets {2 3} -transformed_inst {1 1} -transformed_port {2 3}
+dv_discrep 1 {Incorrect Nets} -inst_count { 4 4}
+dv_discrep_line {Net } -lnet {VDD} {                                                   } -snet {VDD} {}
+dv_discrep_line {                                                          } -snet {VOUT} {}
+dv_discrep_line {--- 4 Connections On This Net ---                         --- 4 Connections On This Net ---}
+dv_discrep_line {}
+dv_end

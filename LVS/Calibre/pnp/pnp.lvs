@@ -1,0 +1,92 @@
+// Layers
+LAYER NW              3  //  N-Well
+LAYER ODI             6  //  Active area, thin oxide for device, or interconnection
+LAYER PP              25  //  P+ S/D Implant
+LAYER NP              26  //  N+ S/D Implant
+LAYER RPO             29  //  Non silicided area definition
+LAYER CO              30  //  Contact Window
+LAYER M1i             31  //  M1
+LAYER M2i             32  //  M2
+LAYER VIA1i           51  //  Via12
+LAYER BJTDMYi         110  //  BJT dummy layer for LVS
+LAYER DPO            318 
+LAYER MAP 17 DATATYPE 1 318 //  Dummy PO
+LAYER LVSDMYi        858 
+LAYER MAP 208 DATATYPE 1 858 //  Dummy layer for compact model devices
+
+//Form BULK layer
+DRC:1 = EXTENT
+BULK  = SIZE DRC:1 BY 0.005
+//***** Define connectivity/via layer -- psub ****
+psub = BULK NOT NW 
+
+diff = ODI INTERACT CO
+nthin = diff AND NP 
+tndiff1 =copy  nthin 
+nplug1 = tndiff1 AND NW
+pthin = diff AND PP  //  define P+ thin oxide
+tpdiff1 = copy pthin  // define P+ diffusion region
+plug_sel1 = tndiff1 OR tpdiff1 
+tioda = diff NOT tpdiff1 
+tiod = tioda NOT tndiff1 
+plug_sel2 = plug_sel1 OR tiod 
+plug_sel = plug_sel2 INTERACT CO  //  plug select layers
+nplug_dmy = nplug1 NOT nplug2 
+tndiff_dmy = tndiff1 INTERACT nplug_dmy 
+tndiff = tndiff1 NOT tndiff_dmy 
+nplug2 = nplug1 AND plug_sel 
+pplug1 = tpdiff1 AND psub 
+pplug2 = pplug1 AND plug_sel 
+pplug_dmy = pplug1 NOT pplug2 
+tpdiff_dmy = tpdiff1 INTERACT pplug_dmy 
+tpdiff = tpdiff1 NOT tpdiff_dmy
+ttdiff1 = tpdiff AND BJTDMYi 
+ttdiff = COPY ttdiff1 
+cnbase1 = NW AND BJTDMYi  //  define CORE BJT[PV] base terminal
+
+cemit1a = ttdiff AND cnbase1 
+cemit1 = cemit1a INTERACT RPO  //  define CORE BJT[PV] emitter
+//***** Define connectivity/via layer -- coll1 ****
+collsur = psub TOUCH cnbase1 
+coll1 = collsur OR cnbase1  //   define pnp collector
+
+//* Define device -- bjt pnp5
+cemit5_org = AREA cemit1  > 24.999  < 25.001 
+cemit5 = cemit5_org AND LVSDMYi 
+
+// Device declaration
+DEVICE Q(pnp5) cemit5 coll1 cnbase1 cemit1 [
+		property A
+		A = area(cemit1)
+ ]
+
+// Connection
+CONNECT  tpdiff coll1 BY pplug
+CONNECT cnbase1 tndiff BY nplug
+CONNECT cemit1 tpdiff
+
+CONNECT M1 tndiff BY n_odCont
+CONNECT M1 tpdiff BY p_odCont
+
+CONNECT M2i M1 BY VIA1i
+
+//*****Definr connectivity/Via layer -- odCont ***
+odCont = CO INTERACT ODI 
+//***** Define connectivity/via layer -- p_odCont & n_odCont ****
+p_odCont = odCont AND PP 
+n_odCont = odCont NOT p_odCont 
+
+//* Define device -- M1
+M1 = M1i OR CO 
+
+//**** Define nplug & pplug
+// nplug
+nplug = copy nplug2
+// pplug
+pplug = copy pplug2
+
+//******* Text layer *******
+TEXT LAYER 131 ATTACH 131 M1
+PORT LAYER TEXT 131
+TEXT LAYER 132 ATTACH 132 M2i
+PORT LAYER TEXT 132

@@ -1,0 +1,14 @@
+( ( nil
+  version "2.1"
+  mapType "incremental"
+  blockName "test_pnp"
+  repList "auCdl schematic"
+  stopList "auCdl"
+  hierDelim "."
+  netlistDir "/home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pnp/pnp_run1"
+ )
+( model
+( "ROD/test_pnp/schematic" "test_pnp" )
+ )
+( "test_pnp" "ihnl/cds0/map" )
+ )

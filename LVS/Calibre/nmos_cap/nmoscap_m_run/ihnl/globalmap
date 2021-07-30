@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ROD/test_nmoscap/schematic test_nmoscap
+$endmodel
+$net
+$endnet
+$param
+$endparam

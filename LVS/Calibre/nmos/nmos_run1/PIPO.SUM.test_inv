@@ -1,0 +1,82 @@
+********************************************************************************
+Product   : Virtuoso(R) XStream Out
+Program   : @(#)$CDS: strmout version 6.1.8-64b 10/08/2019 19:40 (ip-172-18-22-57) $
+          : sub-version  IC6.1.8-64b.500.7 
+Started at: 23-Jul-2021  11:57:56
+User Name : akumar
+Host Name : VLSI-SRV-002
+Directory : /home/NIS/projects/AMPERE/REV1/work/akumar
+CADENCE Design Systems, Inc.
+********************************************************************************
+Info: Cellview Rev Num:99,  Tech Rev Num:59
+
+
+                       Individual Cell Statistics - Basic Objects
+---------------------------------------------------------------------------------------------------------------------------------------
+Library/Cell/View               Instance Array   Polygon  Rect   Path   PathSeg   Text   TextDisplay   Line   Dot   Arc   Donut   Ellipse 
+---------------------------------------------------------------------------------------------------------------------------------------
+tsmcN28/pch_18_mac/layout       0        0       0        27     0      0         11     0             0      0     0     0       0       
+tsmcN28/M1_OD/layout            0        0       0        5      0      0         0      0             0      0     0     0       0       
+tsmcN28/nch_18_mac/layout       0        0       0        26     0      0         11     0             0      0     0     0       0       
+ROD/test_inv/layout             2        0       0        7      0      8         0      4             0      0     0     0       0       
+---------------------------------------------------------------------------------------------------------------------------------------
+
+                       Individual Cell Statistics - Advanced Objects
+---------------------------------------------------------------------------------------------------------------------------------------
+Library/Cell/View               PRBdy    OtherBdy   AreaBlkg   LayerBlkg  AreaHalo   Row   Marker   CustVia   StdVia    CdsGenVia
+---------------------------------------------------------------------------------------------------------------------------------------
+tsmcN28/pch_18_mac/layout       0        0          0          0          0          0     0        0         0         0        
+tsmcN28/M1_OD/layout            0        0          0          0          0          0     0        0         0         0        
+tsmcN28/nch_18_mac/layout       0        0          0          0          0          0     0        0         0         0        
+ROD/test_inv/layout             0        0          0          0          0          0     0        0         2         0        
+---------------------------------------------------------------------------------------------------------------------------------------
+
+                       Statistics of Layers 
+---------------------------------------------------------------------------------------------------------------------------------------
+Cadence         Cadence         Stream  Stream   
+Layer           Purpose         Layer   Datatype  Polygon  Rect     Path     Text     TextDisplay   Line Dot Arc Donut Ellipse Pathseg
+---------------------------------------------------------------------------------------------------------------------------------------
+IP              drawing         63      63        0        0        0        14       0             0    0   0   0     0      0      
+NW              drawing         3       0         0        2        0        0        0             0    0   0   0     0      0      
+NP              drawing         26      0         0        2        0        0        0             0    0   0   0     0      0      
+OD_18           drawing         16      0         0        2        0        0        0             0    0   0   0     0      0      
+M1              drawing         31      0         0        7        0        0        0             0    0   0   0     0      8      
+CO              drawing         30      0         0        17       0        0        0             0    0   0   0     0      0      
+M1              pin             131     0         0        4        0        0        4             0    0   0   0     0      0      
+PM              drawing1        205     6         0        1        0        0        0             0    0   0   0     0      0      
+PO              drawing         17      0         0        8        0        0        0             0    0   0   0     0      0      
+PDK             drawing         75      0         0        1        0        0        0             0    0   0   0     0      0      
+OD              drawing         6       0         0        11       0        0        0             0    0   0   0     0      0      
+PP              drawing         25      0         0        2        0        0        0             0    0   0   0     0      0      
+text            drawing         127     0         0        0        0        8        0             0    0   0   0     0      0      
+PO              dummy1          17      7         0        8        0        0        0             0    0   0   0     0      0      
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Summary of Objects Translated:
+	Scalar Instances:		2
+	Array Instances:		0
+	Polygons:			0
+	Paths:				0
+	Rectangles:			65
+	Lines:				0
+	Arcs:				0
+	Donuts:				0
+	Dots:				0
+	Ellipses:			0
+	Boundaries:			0
+	Area Blockages:			0
+	Layer Blockages:		0
+	Area Halos:			0
+	Markers:			0
+	Rows:				0
+	Standard Vias:			2
+	Custom Vias:			0
+	CdsGen Vias:			0
+	Pathsegs:			8
+	Text:				22
+	TextDisplay:		4
+	Cells:				4
+Design Libraries: 
+
+DEFINE ROD	/home/NIS/projects/AMPERE/REV1/work/akumar/ROD
+DEFINE tsmcN28	/PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28

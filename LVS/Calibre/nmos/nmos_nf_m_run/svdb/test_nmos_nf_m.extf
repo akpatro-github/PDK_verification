@@ -1,0 +1,9 @@
+# Automagically generated file: Please do not edit!
+lvs_ExtfVersion 3
+lvs_ExtRunTimes 1627315432 1627315437
+lvs_ExtOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/nmos_nf_m_run1
+lvs_ExtOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/nmos_nf_m_run1/_nmos.lvs_
+lvs_ExtInfoExtSummary {0 0 0 0 0 0 0 0 0 0 0}
+lvs_ExtInfoDfmSummary {0}
+lvs_ExtOutFile LAYOUT_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/nmos_nf_m_run1/test_nmos_nf_m.sp
+lvs_ExtOutFile EXTRACTION_REPORT test_nmos_nf_m.lvs.report.ext

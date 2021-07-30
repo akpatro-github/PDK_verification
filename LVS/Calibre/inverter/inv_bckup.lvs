@@ -1,0 +1,168 @@
+// Inverter Rule Deck
+LAYOUT PRECISION 1000
+PRECISION 10000
+RESOLUTION 1
+
+// xcalibre capacitance and resistance file
+UNIT CAPACITANCE ff
+UNIT RESISTANCE OHM
+UNIT LENGTH U
+
+MASK RESULTS DATABASE NONE //"mask.db"
+
+TEXT DEPTH PRIMARY
+PORT DEPTH PRIMARY
+
+FLAG SKEW YES
+FLAG OFFGRID YES
+
+// Setup default for LVS
+#IFDEF RC_DECK
+  //MASK SVDB DIRECTORY "svdb" QUERY
+#ELSE
+  MASK SVDB DIRECTORY "svdb" QUERY
+#ENDIF
+
+LVS REPORT "lvs.rep"
+LVS REPORT OPTION S
+LVS POWER NAME POWER_NAME
+LVS GROUND NAME GROUND_NAME
+
+///LAYOUT ALLOW DUPLICATE CELL YES
+
+LVS SPICE PREFER PINS            YES
+LVS SPICE REPLICATE DEVICES      YES
+LVS ABORT ON SUPPLY ERROR        NO
+LVS ALL CAPACITOR PINS SWAPPABLE YES
+LVS RECOGNIZE GATES              NONE
+LVS IGNORE PORTS                 NO
+LVS CHECK PORT NAMES             YES
+LVS REDUCE PARALLEL BIPOLAR      YES
+LVS REDUCE PARALLEL DIODES       YES
+LVS REDUCE PARALLEL CAPACITORS   YES
+LVS REDUCE PARALLEL RESISTORS    YES
+LVS REDUCE SERIES RESISTORS      YES      //Smashes series resistors
+LVS REDUCE SERIES CAPACITORS     YES      //Smashes series capacitors
+LVS REDUCE SPLIT GATES           NO       //Smashes MOS split-gates.
+#IFNDEF FILTER_DGS_TIED_MOS
+LVS FILTER UNUSED OPTION AG RC RE RG
+#ELSE
+LVS FILTER UNUSED OPTION AB RC RE RG
+#ENDIF
+
+//#############################################
+//# MAPPING                                   #
+//#############################################
+
+LAYER NW              3  //  N-Well
+LAYER OD18            16  //  FOR 1.8V device
+LAYER NP              26  //  N+ S/D Implant
+LAYER ODI             6  //  Active area, thin oxide for device, 
+LAYER CO              30  //  Contact Window
+LAYER POI             17  //  Gate poly, poly Si
+LAYER DPO            318 
+LAYER MAP 17 DATATYPE 1 318 //  Dummy PO
+LAYER M1i             31  //  M1
+LAYER PP              25  //  P+ S/D Implant
+LAYER PMETAL         864 
+LAYER MAP 205 DATATYPE 6 864 //  Used for N/P pattern process.
+
+//*****Define Gate -- ngate_18_mac and pgate_18_mac
+diff = ODI INTERACT CO 
+dumpo1 = POI INSIDE diff 
+dumpo2 = dumpo1 NOT INTERACT CO 
+realpo = POI NOT dumpo2
+gate = realpo AND diff
+tngate1 = gate AND NP
+ngate_18_mac = tngate1 AND OD18 // Gate Terminal of NMOS
+gatenw = gate AND NW
+pgate_imp = PP AND PMETAL 
+tpgate1 = gatenw AND pgate_imp
+pgate_18_mac = tpgate1 AND OD18 // Gate terminal for PMOS
+
+//Form BULK layer
+DRC:1 = EXTENT
+BULK  = SIZE DRC:1 BY 0.005
+//***** Define connectivity/via layer -- psub ****
+psub = copy BULK 
+
+//* Define device -- tndiff
+nthin = diff AND NP 
+tndiff = nthin NOT gate //Source and drain region for nmos
+
+//* Define device --- tpdiff
+pthin = diff AND PP  //  define P+ thin oxide
+tpdiff1 = pthin NOT gate 
+pplug1 = tpdiff1 AND psub 
+pplug2 = pplug1 AND plug_sel 
+pplug_dmy = pplug1 NOT pplug2 
+tpdiff_dmy = tpdiff1 INTERACT pplug_dmy 
+tpdiff = tpdiff1 NOT tpdiff_dmy  //Source and drain terminal of pmos
+
+//* Define device -- MN(pch_18_mac)
+DEVICE MP(pch_18_mac) pgate_18_mac pgate_18_mac(G) tpdiff(S) tpdiff(D) NW(B) <pthin> [
+  property W,L
+   W=(perimeter_coincide(pgate_18_mac, tpdiff ) + perimeter_inside(pgate_18_mac, tpdiff)) / 2 
+   L=area(pgate_18_mac) / W
+]
+//* Define device -- MN(nch_18_mac)
+DEVICE MN(nch_18_mac) ngate_18_mac ngate_18_mac(G) tndiff(S) tndiff(D) psub(B) <nthin> [
+  property W,L
+   W=(perimeter_coincide(ngate_18_mac, tndiff ) + perimeter_inside(ngate_18_mac, tndiff))/ 2
+   L=area(ngate_18_mac) / W
+  ]
+
+//****** connect the layers*******
+CONNECT M1 tndiff BY n_odCont
+CONNECT M1 tpdiff BY p_odCont
+
+CONNECT  tpdiff psub BY pplug
+CONNECT  tndiff NW BY nplug
+
+CONNECT M1 n_poly BY n_polyCont
+CONNECT ngate_18_mac n_poly
+
+CONNECT M1 p_poly BY p_polyCont
+CONNECT pgate_18_mac p_poly
+
+//*****Definr connectivity/Via layer -- odCont ***
+odCont = CO INTERACT ODI 
+//***** Define connectivity/via layer -- p_odCont & n_odCont ****
+p_odCont = odCont AND PP 
+n_odCont = odCont NOT p_odCont 
+
+//***** Define connectivity/via layer -- polyCont ****
+polyCont = CO INTERACT POI 
+//***** Define connectivity/via layer -- p_polyCont & n_polyCont ****
+p_polyCont = polyCont AND PP
+n_polyCont = polyCont NOT p_polyCont
+
+//***** Define connectivity/via layer -- p_poly & n_poly ****
+p_poly = POI AND PP 
+n_poly = POI NOT p_poly
+
+//* Define device -- M1
+M1 = M1i OR CO 
+
+//**** Define nplug & pplug
+// Plug_sel
+plug_sel1 = tndiff OR tpdiff1
+tioda = diff NOT tpdiff1
+tiodb = tioda NOT tndiff 
+tiod = tiodb NOT POI
+plug_sel2 = plug_sel1 OR tiod 
+plug_sel = plug_sel2 INTERACT CO
+// nplug
+gate1 = realpo AND diff
+tndiffa = nthin NOT gate1 
+diffb = ODI NOT diff 
+ndiffb = diffb AND NP 
+tndiff1 = tndiffa OR ndiffb
+nplug1 = tndiff1 AND NW
+nplug = nplug1 AND plug_sel
+// pplug
+pplug = copy pplug2
+
+//******* Text layer *******
+TEXT LAYER 131 ATTACH 131 M1
+PORT LAYER TEXT 131

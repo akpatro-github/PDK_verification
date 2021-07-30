@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ROD/test_resistor/schematic test_resistor
+$endmodel
+$net
+$endnet
+$param
+$endparam

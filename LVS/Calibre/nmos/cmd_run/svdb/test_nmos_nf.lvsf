@@ -1,0 +1,7 @@
+# Automagically generated file: Please do not edit!
+lvs_LvsOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/cmd_run
+lvs_LvsfVersion 1
+lvs_LvsOutFile LVS_REPORT lvs.rep
+lvs_LvsOutFile SOURCE_NETLIST netlist
+lvs_LvsOutFile RULES_FILE nmos.lvs
+lvs_LvsRunTimes 1627626512 1627626512

@@ -1,0 +1,14 @@
+( ( nil
+  version "2.1"
+  mapType "incremental"
+  blockName "test_inv"
+  repList "auCdl schematic"
+  stopList "auCdl"
+  hierDelim "."
+  netlistDir "/home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1"
+ )
+( model
+( "ROD/test_inv/schematic" "test_inv" )
+ )
+( "test_inv" "ihnl/cds0/map" )
+ )

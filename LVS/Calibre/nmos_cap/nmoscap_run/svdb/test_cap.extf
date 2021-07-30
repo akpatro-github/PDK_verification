@@ -1,0 +1,9 @@
+# Automagically generated file: Please do not edit!
+lvs_ExtfVersion 3
+lvs_ExtRunTimes 1627451722 1627451722
+lvs_ExtOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos_cap/nmoscap_run1
+lvs_ExtOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos_cap/nmoscap_run1/_nmos_cap.lvs_
+lvs_ExtInfoExtSummary {0 0 0 0 0 0 0 0 0 0 0}
+lvs_ExtInfoDfmSummary {0}
+lvs_ExtOutFile LAYOUT_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos_cap/nmoscap_run1/test_cap.sp
+lvs_ExtOutFile EXTRACTION_REPORT test_cap.lvs.report.ext

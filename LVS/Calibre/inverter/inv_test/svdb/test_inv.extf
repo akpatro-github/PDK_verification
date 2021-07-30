@@ -1,0 +1,9 @@
+# Automagically generated file: Please do not edit!
+lvs_ExtfVersion 3
+lvs_ExtRunTimes 1627026620 1627026620
+lvs_ExtOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1
+lvs_ExtOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1/_inverter.lvs_
+lvs_ExtInfoExtSummary {0 0 0 0 0 0 0 0 0 0 0}
+lvs_ExtInfoDfmSummary {0}
+lvs_ExtOutFile LAYOUT_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1/test_inv.sp
+lvs_ExtOutFile EXTRACTION_REPORT test_inv.lvs.report.ext

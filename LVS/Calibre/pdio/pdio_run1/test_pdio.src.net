@@ -1,0 +1,28 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ROD
+* Top Cell Name: test_pdio
+* View Name:     schematic
+* Netlisted on:  Jul 28 19:13:03 2021
+************************************************************************
+
+.INCLUDE  /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/../Calibre/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ROD
+* Cell Name:    test_pdio
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT test_pdio V1 V2
+*.PININFO V1:B V2:B
+DD0 V1 V2 pdio area=9e-12 pj=1.2e-05 m=1
+.ENDS
+

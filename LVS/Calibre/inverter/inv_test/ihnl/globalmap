@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ROD/test_inv/schematic test_inv
+$endmodel
+$net
+$endnet
+$param
+$endparam

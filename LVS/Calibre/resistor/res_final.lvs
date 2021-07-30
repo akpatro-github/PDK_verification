@@ -1,0 +1,87 @@
+//Resistor Rule deck File
+
+LAYOUT PRIMARY "lvs_top"
+LAYOUT PATH "lvs_top.gds"
+LAYOUT SYSTEM GDSII
+
+SOURCE PRIMARY "lvs_top"
+SOURCE PATH "lvs_top.cdl"
+SOURCE SYSTEM SPICE
+
+LVS SPICE PREFER PINS	         YES
+LVS SPICE REPLICATE DEVICES      YES
+LVS ABORT ON SUPPLY ERROR        NO
+LVS ALL CAPACITOR PINS SWAPPABLE YES
+LVS RECOGNIZE GATES              NONE
+LVS IGNORE PORTS                 NO
+LVS CHECK PORT NAMES             YES
+LVS REDUCE PARALLEL BIPOLAR      YES
+LVS REDUCE PARALLEL DIODES       YES
+LVS REDUCE PARALLEL CAPACITORS   YES
+LVS REDUCE PARALLEL RESISTORS    YES
+LVS REDUCE SERIES RESISTORS      YES      //Smashes series resistors
+LVS REDUCE SERIES CAPACITORS     YES      //Smashes series capacitors
+LVS REDUCE SPLIT GATES           NO       //Smashes MOS split-gates.
+
+// Layer 
+LAYER PP              25  //  P+ S/D Implant
+LAYER POI             17  //  Gate poly, poly Si
+LAYER RPO             29  //  Non silicided area definition
+LAYER CO              30  //  Contact Window
+LAYER M1i             31  //  M1
+LAYER DPO            318 
+LAYER MAP 17 DATATYPE 1 318 //  Dummy PO
+LAYER PMETAL         864 
+LAYER MAP 205 DATATYPE 6 864 //  Used for N/P pattern process.
+LAYER RPDMYai        775 
+LAYER MAP 115 DATATYPE 0 775 //  dummy layer to form OD/POLY resistor (2-Terminals resistor)
+LAYER RH_PO          731 
+LAYER MAP 117 DATATYPE 2 731 //  layer to form poly resistor
+
+PO = POI OR DPO 
+rpolywo1 = PO AND RH_PO 
+rpolywo2 = rpolywo1 AND RPO 
+rpolywo3 = rpolywo2 INTERACT POI
+p1rdum = RPDMYai INTERACT PO  //  poly1 resistor dummy
+rpolywo = rpolywo3 INTERACT p1rdum 
+poly1 = PO NOT rpolywo 
+rpoly1 = rpolywo1 AND p1rdum 
+rpoly = rpoly1 NOT INTERACT RPO 
+poly2 = poly1 NOT rpoly 
+metal_interface_edge = PMETAL INSIDE EDGE poly2 
+metal_interface_1 = EXPAND EDGE metal_interface_edge INSIDE BY 0.002
+metal_interface_2 = EXPAND EDGE metal_interface_edge OUTSIDE BY 0.002
+metal_interface = metal_interface_1 OR metal_interface_2 
+poly_org = poly2 NOT metal_interface 
+//***** Define connectivity/via layer -- p_poly ****
+p_poly_1 = poly_org AND PP 
+p_poly = p_poly_1 NOT metal_interface 
+
+
+//* Define device -- xdev rupolym
+rupolym_r1 = rpolywo AND PP 
+rupolym_r2 = rupolym_r1 AND PMETAL  //  high R resistor
+rupolym_r = rupolym_r2 INTERACT RPDMYai  //   high R resistor w/o silicide (2-Terminals)
+
+
+// Device
+DEVICE rupolym rupolym_r p_poly(PLUS) p_poly(MINUS) (PLUS MINUS) [
+property l,w
+  w = perimeter_coincide(rupolym_r,p_poly)/2
+  l = area(rupolym_r)/w
+]
+
+//Connectivity
+
+CONNECT M1 p_poly BY p_polyCont
+
+//***** Define connectivity/via layer -- polyCont ****
+polyCont = CO INTERACT PO
+//***** Define connectivity/via layer -- p_polyCont ****
+p_polyCont = polyCont AND PP
+
+//* Define device -- xdev rm1w
+M1 = M1i OR CO 
+
+TEXT LAYER 131 ATTACH 131 M1
+PORT LAYER TEXT 131

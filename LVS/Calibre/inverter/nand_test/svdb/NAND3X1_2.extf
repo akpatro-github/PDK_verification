@@ -1,0 +1,9 @@
+# Automagically generated file: Please do not edit!
+lvs_ExtfVersion 3
+lvs_ExtRunTimes 1626853559 1626853559
+lvs_ExtOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/nand_test
+lvs_ExtOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/nand_test/_inverter.lvs_
+lvs_ExtInfoExtSummary {0 0 0 0 0 0 0 0 0 0 0}
+lvs_ExtInfoDfmSummary {0}
+lvs_ExtOutFile LAYOUT_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/nand_test/NAND3X1_2.sp
+lvs_ExtOutFile EXTRACTION_REPORT NAND3X1_2.lvs.report.ext

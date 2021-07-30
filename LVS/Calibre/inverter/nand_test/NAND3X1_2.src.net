@@ -1,0 +1,33 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ajit_2021
+* Top Cell Name: NAND3X1_2
+* View Name:     schematic
+* Netlisted on:  Jul 21 13:15:58 2021
+************************************************************************
+
+.INCLUDE  /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/../Calibre/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ajit_2021
+* Cell Name:    NAND3X1_2
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT NAND3X1_2 A B C GND VDD out
+*.PININFO A:I B:I C:I out:O GND:B VDD:B
+MM2 net13 C GND GND nch_18_mac l=150.0n w=600n m=1 nf=1
+MM1 net14 B net13 GND nch_18_mac l=150.0n w=600n m=1 nf=1
+MM0 out A net14 GND nch_18_mac l=150.0n w=600n m=1 nf=1
+MM3 out A VDD VDD pch_18_mac l=150.0n w=600n m=1 nf=1
+MM4 out B VDD VDD pch_18_mac l=150.0n w=600n m=1 nf=1
+MM5 out C VDD VDD pch_18_mac l=150.0n w=600n m=1 nf=1
+.ENDS
+

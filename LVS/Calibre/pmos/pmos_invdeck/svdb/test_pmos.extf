@@ -1,0 +1,9 @@
+# Automagically generated file: Please do not edit!
+lvs_ExtfVersion 3
+lvs_ExtRunTimes 1626844381 1626844381
+lvs_ExtOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pmos/pmos_invdeck
+lvs_ExtOutFile RULES_FILE /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pmos/pmos_invdeck/_inverter.lvs_
+lvs_ExtInfoExtSummary {1 0 0 0 0 0 0 0 0 0 0}
+lvs_ExtInfoDfmSummary {0}
+lvs_ExtOutFile LAYOUT_NETLIST /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pmos/pmos_invdeck/test_pmos.sp
+lvs_ExtOutFile EXTRACTION_REPORT test_pmos.lvs.report.ext

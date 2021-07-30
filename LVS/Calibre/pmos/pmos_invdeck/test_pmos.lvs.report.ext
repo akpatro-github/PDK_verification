@@ -1,0 +1,30 @@
+
+
+       #############################################################
+       ##                                                         ##
+       ##               C A L I B R E    S Y S T E M              ##
+       ##                                                         ##
+       ##    C I R C U I T   E X T R A C T I O N   R E P O R T    ##
+       ##                                                         ##
+       #############################################################
+
+
+REPORT FILE NAME:         test_pmos.lvs.report.ext
+LAYOUT NAME:              test_pmos.calibre.db ('test_pmos')
+CREATION TIME:            Wed Jul 21 10:43:01 2021
+CURRENT DIRECTORY:        /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/pmos/pmos_invdeck
+USER NAME:                akumar
+CALIBRE VERSION:          v2020.2_14.12    Thu Apr 2 15:39:27 PDT 2020
+
+
+
+Extraction Errors and Warnings for cell "test_pmos"
+---------------------------------------------------
+
+WARNING:  Short circuit - Different names on one net:
+          Net Id:  1
+          (1)  name  "VDD"  at location  (0.1115,0.2275)  on layer  131
+          (2)  name  "Vout"  at location  (0.1655,0.0895)  on layer  131
+          The name "VDD" was assigned to the net.
+
+

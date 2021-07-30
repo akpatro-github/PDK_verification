@@ -1,0 +1,14 @@
+( ( nil
+  version "2.1"
+  mapType "incremental"
+  blockName "test_nmos_nf"
+  repList "auCdl schematic"
+  stopList "auCdl"
+  hierDelim "."
+  netlistDir "/home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/cmd_run"
+ )
+( model
+( "ROD/test_nmos_nf/schematic" "test_nmos_nf" )
+ )
+( "test_nmos_nf" "ihnl/cds0/map" )
+ )

@@ -1,0 +1,20 @@
+
+
+       #############################################################
+       ##                                                         ##
+       ##               C A L I B R E    S Y S T E M              ##
+       ##                                                         ##
+       ##    C I R C U I T   E X T R A C T I O N   R E P O R T    ##
+       ##                                                         ##
+       #############################################################
+
+
+REPORT FILE NAME:         test_nmos.lvs.report.ext
+LAYOUT NAME:              test_nmos.calibre.db ('test_nmos')
+CREATION TIME:            Fri Jul 23 12:44:32 2021
+CURRENT DIRECTORY:        /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/nmos_run1
+USER NAME:                akumar
+CALIBRE VERSION:          v2020.2_14.12    Thu Apr 2 15:39:27 PDT 2020
+
+
+

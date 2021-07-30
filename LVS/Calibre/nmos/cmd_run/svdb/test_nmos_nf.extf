@@ -1,0 +1,5 @@
+# Automagically generated file: Please do not edit!
+lvs_ExtfVersion 1
+lvs_ExtOutFile RUNDIR /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/nmos/cmd_run
+lvs_ExtOutFile RULES_FILE nmos.lvs
+lvs_ExtRunTimes 1627626512 1627626512

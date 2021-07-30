@@ -1,0 +1,537 @@
+//LVS for nmos
+// Environment Setup
+
+LAYOUT PRECISION 1000
+PRECISION 10000
+RESOLUTION 1
+
+// xcalibre capacitance and resistance file
+UNIT CAPACITANCE ff
+UNIT RESISTANCE OHM
+UNIT LENGTH U
+
+MASK RESULTS DATABASE NONE //"mask.db"
+
+TEXT DEPTH PRIMARY
+PORT DEPTH PRIMARY
+
+FLAG SKEW YES
+FLAG OFFGRID YES
+
+// Setup default for LVS
+#IFDEF RC_DECK
+  //MASK SVDB DIRECTORY "svdb" QUERY
+#ELSE
+  MASK SVDB DIRECTORY "svdb" QUERY
+#ENDIF
+
+LVS REPORT "lvs.rep"
+LVS REPORT OPTION S
+LVS POWER NAME POWER_NAME
+LVS GROUND NAME GROUND_NAME
+
+///LAYOUT ALLOW DUPLICATE CELL YES
+
+LVS SPICE PREFER PINS            YES
+LVS SPICE REPLICATE DEVICES      YES
+LVS ABORT ON SUPPLY ERROR        NO
+LVS ALL CAPACITOR PINS SWAPPABLE YES
+LVS RECOGNIZE GATES              NONE
+LVS IGNORE PORTS                 NO
+LVS CHECK PORT NAMES             YES
+LVS REDUCE PARALLEL BIPOLAR      YES
+LVS REDUCE PARALLEL DIODES       YES
+LVS REDUCE PARALLEL CAPACITORS   YES
+LVS REDUCE PARALLEL RESISTORS    YES
+LVS REDUCE SERIES RESISTORS      YES      //Smashes series resistors
+LVS REDUCE SERIES CAPACITORS     YES      //Smashes series capacitors
+LVS REDUCE SPLIT GATES           NO       //Smashes MOS split-gates.
+#IFNDEF FILTER_DGS_TIED_MOS
+LVS FILTER UNUSED OPTION AG RC RE RG
+#ELSE
+LVS FILTER UNUSED OPTION AB RC RE RG
+#ENDIF
+
+//#############################################
+//# MAPPING                                   #
+//#############################################
+
+LAYER OD18            16  //  FOR 1.8V device
+LAYER OD18_12        314 
+LAYER MAP 16 DATATYPE 1 314 //  FOR 1.8V under_drive 1.2V 
+LAYER OD18_15        315 
+LAYER MAP 16 DATATYPE 4 315 //  FOR 1.8V under_drive 1.5V
+LAYER VTL_N           12  //  CORE Low VT NMOS
+LAYER NT_N            11  //   Native NMOS blocked implan
+LAYER VTL_N_18       307 
+LAYER MAP 79 DATATYPE 1 307 //  IO 1.8V LVT NMOS
+LAYER UDM            328 
+LAYER MAP 29 DATATYPE 1 328 //  For UDM devices
+LAYER RPO             29  //  Non silicided area definition
+LAYER NP              26  //  N+ S/D Implant
+LAYER NWLVT          862 
+LAYER MAP 167 DATATYPE 1 862 //  Used for NW LVT device
+LAYER NW              3  //  N-Well
+LAYER NWDMYi         773 
+LAYER MAP 114 DATATYPE 0 773 //  dummy layer to form N-Well resistor
+LAYER NWDMY1         774 
+LAYER MAP 114 DATATYPE 1 774 //  dummy layer to form N-Well 3 terminals resistor
+LAYER LVSDMYi        858 
+LAYER MAP 208 DATATYPE 1 858 //  Dummy layer for compact model devices
+LAYER RFDMY          798 
+LAYER MAP 161 DATATYPE 0 798 //  For RF Device using only ( some layout using datatype 1 )
+LAYER GATED          870 
+LAYER MAP 255 DATATYPE 3 870 //   GATED layer for define gated-diode region, it must cover whole active region 
+LAYER MAP 50 DATATYPE 0 694 //  Use "SRM" to cover SRAM cell array to generate VTC_N, VTC_P mask.
+LAYER SRMD68         715 
+LAYER MAP 50 DATATYPE 68 715 //  Identify IO_LL SRAM.
+LAYER SR_DOD         303 
+LAYER MAP 6 DATATYPE 7 303 //  For dummy patterns
+LAYER RPDMYai        775 
+LAYER MAP 115 DATATYPE 0 775 //  dummy layer to form OD/POLY resistor (2-Terminals resistor)
+LAYER RPDMYa1        776 
+LAYER MAP 115 DATATYPE 1 776 //  dummy layer to form OD/POLY resistor (3-Terminals resistor)
+LAYER ODI             6  //  Active area, thin oxide for device, or interconnection
+LAYER RH_OD          730 
+LAYER MAP 117 DATATYPE 1 730 //  layer to form diffusion resistor
+LAYER CO              30  //  Contact Window
+LAYER HVD_N          720 
+LAYER MAP 91 DATATYPE 1 720 //  HVNMOS
+LAYER HVD_P          721 
+LAYER MAP 91 DATATYPE 2 721 //  HVPMOS
+LAYER PMETAL         864 
+LAYER MAP 205 DATATYPE 6 864 //  Used for N/P pattern process.
+LAYER DRAIN          301 
+LAYER MAP 6 DATATYPE 3 301 //  For RF MOS drain side using only
+LAYER POI             17  //  Gate poly, poly Si
+LAYER ROISO_ROM      733 
+LAYER MAP 84 DATATYPE 27 733 //  For ROM device to remove OD
+LAYER SRMD6          698 
+LAYER MAP 50 DATATYPE 6 698 //  Identify ROM device.
+LAYER RODMY           49  //  dummy layer for LVS to exclude OD area
+LAYER SRAMDMY        812 
+LAYER MAP 186 DATATYPE 0 812 //  SRAMDMY
+LAYER SRMD66         713 
+LAYER MAP 50 DATATYPE 66 713 //  Identify ULP SRAM.
+LAYER SRMD67         714 
+LAYER MAP 50 DATATYPE 67 714 //  Identify ULP SRAM.
+LAYER SRMD69         716 
+LAYER MAP 50 DATATYPE 69 716 //  Identify TGO_LL SRAM.
+LAYER SRMD70         717 
+LAYER MAP 50 DATATYPE 70 717 //  Identify ULP SRAM.
+LAYER SRMD71         718 
+LAYER MAP 50 DATATYPE 71 718 //  Identify ULP SRAM.
+LAYER SRMD14i        704 
+LAYER MAP 50 DATATYPE 14 704 //  Identify LOW POWER SRAM.
+LAYER SRMD15         705 
+LAYER MAP 50 DATATYPE 15 705 //  Identify 2P_8T_HC_MUX SRAM.
+LAYER SRMD16         706 
+LAYER MAP 50 DATATYPE 16 706 //  Identify 2P_10T SRAM.
+LAYER SRMD18         708 
+LAYER MAP 50 DATATYPE 18 708 //  Identify 2P_8T HC SRAM.
+LAYER SRMD20         710 
+LAYER MAP 50 DATATYPE 20 710 //  Identify 3P_10T SRAM
+LAYER SRMD3          695 
+LAYER MAP 50 DATATYPE 3 695 // 
+LAYER SRMD4          696 
+LAYER MAP 50 DATATYPE 4 696 // 
+LAYER SRMD9          699 
+LAYER MAP 50 DATATYPE 9 699 //  Identify GRP device.
+LAYER SRM            694 
+LAYER MAP 50 DATATYPE 0 694 //  Use "SRM" to cover SRAM cell array to generate VTC_N, VTC_P mask.
+LAYER DOD            300 
+LAYER RH_PO          731 
+LAYER MAP 117 DATATYPE 2 731 //  layer to form poly resistor 
+LAYER CPO            316 
+LAYER MAP 17 DATATYPE 11 316 //  Cut poly layer 
+LAYER TPO2           317 
+LAYER MAP 17 DATATYPE 12 317 //  Cut poly layer for TSMC SRAM team internal use
+LAYER DPO            318 
+LAYER MAP 17 DATATYPE 1 318 //  Dummy PO
+LAYER GB_D2i         867 
+LAYER MAP 254 DATATYPE 102 867 //  Used for sizing down POI(17;0) 2nm  (after shrink)
+LAYER SPS1i          868 
+LAYER MAP 254 DATATYPE 201 868 //  Used for sizing down POI(17;0) 2nm  (after shrink)
+LAYER SPS2i          869 
+LAYER MAP 254 DATATYPE 202 869 //  Used for sizing down POI(17;0) 2nm  (after shrink)
+LAYER SRAMDMY6i      815 
+LAYER MAP 186 DATATYPE 6 815 //  FOR WORD LINE DECORDER
+LAYER GB1_5i         866 
+LAYER MAP 254 DATATYPE 7 866 //  Used for sizing up POI(17;0) 1.5nm  (after shrink)
+LAYER GB1i           865 
+LAYER MAP 254 DATATYPE 1 865 //  Used for sizing up POI(17;0) 1nm    (after shrink)
+LAYER SR_DPOi        319 
+LAYER MAP 17 DATATYPE 7 319 //  Special Rule Dummy PO 
+LAYER PSUB2           111  //  dummy layer for isolation power domains of PW
+LAYER DUM1           362 363 
+LAYER MAP 31 DATATYPE 1 362
+LAYER MAP 31 DATATYPE 7 363 //  Dummy Metal-1
+LAYER RMDMY1         802 
+LAYER MAP 116 DATATYPE 1 802 //  dummy layer to form M1 resistor
+LAYER M1i             31  //  M1
+LAYER PP              25  //  P+ S/D Implant
+LAYER ESDIMP         732 
+LAYER MAP 189 DATATYPE 0 732 //  Cover ESD dio region
+LAYER VARi            143  //  layer to form Varactor
+LAYER VAR11          727 
+LAYER MAP 143 DATATYPE 11 727 //  layer to form cmoscap
+LAYER VAR10          726 
+LAYER MAP 143 DATATYPE 10 726 //  layer to form dmoscap
+LAYER CI_CAP         729 
+LAYER MAP 143 DATATYPE 20 729 //  Well implant define at CI capacitor device
+LAYER p3i             103  // 
+LAYER p3d1           327 
+LAYER MAP 103 DATATYPE 1 327 // 
+LAYER ICOVL          855 
+LAYER MAP 165 DATATYPE 3 855 //  Dummy layer for In Chip Overlay monoter pattern  
+LAYER TCDDMY_H       856 
+LAYER MAP 165 DATATYPE 4 856 //  Dummy layer for asymmetric Horizonal dummy pattern  
+LAYER TCDDMY_V       857 
+LAYER MAP 165 DATATYPE 5 857 //  Dummy layer for asymmetric Vertical dummy pattern
+
+//Form BULK layer
+DRC:1 = EXTENT
+BULK  = SIZE DRC:1 BY 0.005
+
+//* Define device -- nmos nch_mac
+
+//* n_poly***
+pgate_imp = PP AND PMETAL
+//***** Define connectivity/via layer -- p_poly ****
+p_poly_1 = poly_org AND PP 
+p_poly_org = p_poly_1 NOT metal_interface 
+n_poly_1 = poly_org NOT p_poly_org 
+n_poly_org = n_poly_1 NOT metal_interface
+n_poly = copy n_poly_org //n_poly_org NOT all_mos_gates
+
+p3 = p3i NOT p3d1
+// Define the device -- gate
+poly_a = POI OR SR_DPOi 
+GB1 = COPY GB1i 
+PO_GB1a = poly_a AND GB1 
+#IFDEF HIGH_RESOLUTION
+	PO_GB1b = SIZE PO_GB1a BY 0.0011
+#ELSE
+	PO_GB1b = SIZE PO_GB1a BY 0.001
+#ENDIF
+POI_bias1 = poly_a OR PO_GB1b 
+GB1_5 = COPY GB1_5i 
+PO_GB1_5a = POI_bias1 AND GB1_5 
+#IFDEF HPC_PLUS_PROCESS
+    #IFDEF HIGH_RESOLUTION
+	    PO_GB1_5b = SIZE PO_GB1_5a BY 0.0011
+    #ELSE
+	    PO_GB1_5b = SIZE PO_GB1_5a BY 0.001
+    #ENDIF
+#ELSE
+  #IFDEF ULP_PROCESS
+    #IFDEF HIGH_RESOLUTION
+	    PO_GB1_5b = SIZE PO_GB1_5a BY 0.0011
+    #ELSE
+	    PO_GB1_5b = SIZE PO_GB1_5a BY 0.001
+    #ENDIF
+  #ELSE
+    #IFDEF HIGH_RESOLUTION
+	    PO_GB1_5b = SIZE PO_GB1_5a BY 0.0017
+    #ELSE
+	    PO_GB1_5b = SIZE PO_GB1_5a BY 0.002
+    #ENDIF
+  #ENDIF
+#ENDIF
+POI_bias2 = POI_bias1 OR PO_GB1_5b 
+SRAMDMY6 = COPY SRAMDMY6i 
+PO_WLDa = POI_bias2 NOT SRAMDMY6 
+#IFDEF HIGH_RESOLUTION
+	PO_WLDb = SIZE PO_WLDa BY 0.0022
+#ELSE
+	PO_WLDb = SIZE PO_WLDa BY 0.002
+#ENDIF
+PO_WLDc = POI_bias2 AND SRAMDMY6 
+PO_WLDd = PO_WLDb OR PO_WLDc 
+#IFDEF HIGH_RESOLUTION
+	POI_bias3 = SIZE PO_WLDd BY -0.0022
+#ELSE
+	POI_bias3 = SIZE PO_WLDd BY -0.002
+#ENDIF
+SPS1 = COPY SPS1i 
+GB_D2_1 = GB_D2i OR SPS1 
+SPS2 = COPY SPS2i 
+GB_D2 = GB_D2_1 OR SPS2 
+PO_GB_D2a = POI_bias3 NOT GB_D2 
+#IFDEF HIGH_RESOLUTION
+	PO_GB_D2b = SIZE PO_GB_D2a BY 0.0022
+#ELSE
+	PO_GB_D2b = SIZE PO_GB_D2a BY 0.002
+#ENDIF
+PO_GB_D2c = POI_bias3 AND GB_D2 
+PO_GB_D2d = PO_GB_D2b OR PO_GB_D2c 
+#IFDEF HIGH_RESOLUTION
+	POI_CD = SIZE PO_GB_D2d BY -0.0022
+#ELSE
+	POI_CD = SIZE PO_GB_D2d BY -0.002
+#ENDIF
+POy = POI_CD OR DPO 
+POx1 = POy NOT CPO 
+POx = POx1 NOT TPO2 
+SR_DPO_cut = SR_DPOi NOT CPO 
+SR_DPO = POx INTERACT SR_DPO_cut 
+PO = POx NOT SR_DPO 
+rpolywo0 = PO AND RH_PO 
+rpolywo1 = COPY rpolywo0 
+rpolywo2 = rpolywo1 AND RPO 
+rpolywo3 = rpolywo2 INTERACT POI 
+RPDMYi = RPDMYai NOT SR_DOD  
+RPDMY1 = RPDMYa1 NOT SR_DOD 
+RPDMY = RPDMYi OR RPDMY1 
+ODz = ODI OR DOD 
+OD = ODz OR SR_DOD 
+RODMY_srm1 = SRM OR SRMD9 
+RODMY_srm2 = RODMY_srm1 OR SRMD14i 
+RODMY_srm3 = RODMY_srm2 OR SRMD15 
+RODMY_srm4 = RODMY_srm3 OR SRMD16 
+RODMY_srm5 = RODMY_srm4 OR SRMD18 
+RODMY_srm6 = RODMY_srm5 OR SRMD20 
+RODMY_srm7 = RODMY_srm6 OR SRMD3 
+RODMY_srm8 = RODMY_srm7 OR SRMD4 
+RODMY_srm9 = RODMY_srm8 OR SRMD68 
+RODMY_srm10 = RODMY_srm9 OR SRMD66 
+RODMY_srm11 = RODMY_srm10 OR SRMD67 
+RODMY_srm12 = RODMY_srm11 OR SRMD69 
+RODMY_srm13 = RODMY_srm12 OR SRMD70 
+RODMY_srm14 = RODMY_srm13 OR SRMD71 
+RODMY_srm15 = RODMY_srm14 OR SRAMDMY 
+RODMY_srm = RODMY AND RODMY_srm15 
+diffa1 = OD NOT RODMY_srm
+ROISO_ROM_eff = ROISO_ROM AND SRMD6 
+diffa = diffa1 NOT ROISO_ROM_eff 
+diff = diffa INTERACT CO 
+rp1 = RPDMY NOT INTERACT diff
+p1rdum = rp1 INTERACT PO  //  poly1 resistor dummy
+rpolywo = rpolywo3 INTERACT p1rdum 
+poly1 = PO NOT rpolywo  
+rpoly1 = rpolywo1 AND p1rdum 
+rpoly = rpoly1 NOT INTERACT RPO    
+poly3a = poly1 NOT rpoly 
+poly21 = poly3a OR SR_DPO 
+poly_rf1 = poly21 INTERACT CO 
+poly_rf2 = poly_rf1 INTERACT DRAIN 
+poly_rf_hv1 = poly_rf1 INTERACT HVD_N 
+poly_rf_hv2 = poly_rf_hv1 AND RFDMY 
+poly_rf = poly_rf2 OR poly_rf_hv2 
+poly_1 = poly21 NOT poly_rf 
+HVD_NP = HVD_N OR HVD_P 
+HVD_NP_not_poly = HVD_NP NOT poly_1 
+poly_hv_dpo = poly_1 INTERACT HVD_NP_not_poly == 2
+poly_2 = poly_1 NOT poly_hv_dpo 
+metal_interface_edge = PMETAL INSIDE EDGE poly_1 
+metal_interface_1 = EXPAND EDGE metal_interface_edge INSIDE BY 0.002
+metal_interface_2 = EXPAND EDGE metal_interface_edge OUTSIDE BY 0.002
+metal_interface = metal_interface_1 OR metal_interface_2 
+poly_org = poly_2 NOT metal_interface 
+realpo1 = poly_org NOT SR_DPO 
+realpo2 = realpo1 OR poly_rf 
+dumpo1 = poly_org INSIDE diff 
+dumpo2 = dumpo1 NOT INTERACT CO 
+realpo = realpo2 NOT dumpo2
+rodwo0 = diff AND RH_OD 
+rodwo1 = COPY rodwo0 
+rodwo2 = rodwo1 AND RPO 
+rodwo3 = rodwo2 INTERACT ODI 
+drdum = RPDMY INTERACT diff  //  diff resistor dummy
+rodwo = rodwo3 INTERACT drdum 
+mdiff1 = diff NOT rodwo 
+rod1 = rodwo1 AND drdum 
+rod = rod1 NOT INTERACT RPO 
+mdiff = mdiff1 NOT rod 
+gate1 = realpo AND mdiff 
+SRM_all = SRM OR SRMD68 
+gate_a1 = gate1 NOT SRM_all 
+gate_b = gate_a1 NOT GATED 
+LVSDMYa = SIZE LVSDMYi BY 0.005 
+LVSDMY = LVSDMYi NOT LVSDMYa 
+gate_mac = gate_b NOT LVSDMY 
+gate_no_mac = gate_b AND LVSDMY 
+gate_a = gate_mac OR gate_no_mac 
+gate = gate_a NOT RFDMY 
+
+// Define the device -- tngate_1
+NWDMY = NWDMYi OR NWDMY1 
+nxwell1 = NW NOT NWDMY 
+nxwell = nxwell1 OR NWLVT  //  define N_well region
+gatennw = gate NOT nxwell  //  gate not inside nwell ( nmos gate )
+tngate_1 = gatennw AND NP
+
+// Define the device -- udm_rpo
+udm_rpo = RPO AND UDM 
+
+// Define the device -- tngate1
+tngate0 = tngate_1 NOT INTERACT udm_rpo 
+tngate1 = COPY tngate0
+
+// Define the device -- ngate_18f
+ngate_18a = tngate1 AND OD18  
+ngate_18b = ngate_18a NOT NT_N 
+ngate_18c = ngate_18b NOT VTL_N_18 
+ngate_18d = ngate_18c NOT VTL_N 
+ngate_18e = ngate_18d NOT OD18_15 
+ngate_18f = ngate_18e NOT OD18_12 
+
+//* Define device -- nmos nch_18_mac
+ngate_18_org1 = copy ngate_18f // ngate_18f NOT SR_ESD 
+ngate_18_org = copy ngate_18_org1 // ngate_18_org1 NOT INTERACT HVD_N 
+ngate_18_mac = copy ngate_18_org // ngate_18_org NOT LVSDMY, 1.8v NMOS MAC
+
+//* gatenw
+gatenw1 = gate AND nxwell  //  gate inside nxwell ( NW & NWLVT )	
+gatenw = gatenw1 NOT NWLVT  //  gate inside nwell ( pmos gate )
+
+//* Define device -- tndiff
+nthin2 = mdiff AND NP 
+nthin1 = nthin2 NOT SR_DPO 
+ydio_a0 = ESDIMP AND OD 
+ydio_a = COPY ydio_a0 
+ydio_b = ydio_a AND NP 
+ydio = ydio_b INTERACT RPO 
+nthin = nthin1 NOT ydio  //  define N+ thin oxide
+tndiffa1 = nthin NOT gate1 
+tndiffa = tndiffa1 NOT SR_DPO 
+diffb = diffa NOT diff 
+ndiffb = diffb AND NP 
+tndiff1 = tndiffa OR ndiffb 
+nplug1 = tndiff1 AND nxwell 
+pthin2 = mdiff AND PP  //  define P+ thin oxide
+pthin = pthin2 NOT SR_DPO 
+tpdiffa1 = pthin NOT gate1 
+tpdiffa = tpdiffa1 NOT SR_DPO  //  define P+ diffusion region
+pdiffb = diffb NOT ndiffb 
+tpdiff1 = tpdiffa OR pdiffb 
+plug_sel1 = tndiff1 OR tpdiff1 
+tioda = diff NOT tpdiff1 
+tiodb = tioda NOT tndiff1 
+tiod1 = tiodb NOT POx 
+tiod2 = tiod1 NOT RPO 
+tiod3 = tiod2 NOT RPDMY 
+tiod = tiod3 NOT NWDMY  //  RPO, RPDMY, NWDMY cut ti-od
+plug_sel2 = plug_sel1 OR tiod 
+plug_sel = plug_sel2 INTERACT CO  //  plug select layers
+nplug2 = nplug1 AND plug_sel 
+nplug_dmy = nplug1 NOT nplug2 
+tndiff_dmy1 = tndiff1 INTERACT nplug_dmy 
+vargt0 = gatenw AND NP 
+vargt1 = COPY vargt0 
+VAR = VARi NOT SR_DOD 
+VAR_noRF = VAR NOT INTERACT RFDMY 
+vargt21 = vargt1 AND VAR_noRF 
+VAR11_RF1 = VARi AND VAR11 
+VAR11_RF2 = VAR11_RF1 AND RFDMY 
+VAR11_RF = VAR11_RF2 INTERACT gate_a 
+var11_nw_rf_1 = nxwell INTERACT VAR11_RF 
+vargt_all1 = vargt21 OR var11_nw_rf_1 
+VAR10_RF1 = VARi AND VAR10 
+VAR10_RF2 = VAR10_RF1 AND RFDMY 
+VAR10_RF = VAR10_RF2 INTERACT gate_a 
+var10_nw_rf_1 = nxwell INTERACT VAR10_RF 
+vargt_all2 = vargt_all1 OR var10_nw_rf_1 
+npolycap25_1 = tngate1 AND CI_CAP 
+vargt_all = vargt_all2 OR npolycap25_1 
+tndiff_dmy = tndiff_dmy1 NOT INTERACT vargt_all 
+tndiff_all = tndiff1 NOT tndiff_dmy
+//tndiff_cut = d_tndiff_hv OR (s_tndiff_hv OR (s_tndiff_udm OR d_tndiff_udm))
+//all_woR_form = pdiff_gdio3 OR (pdiff_gdio2 OR (ndiff_gdio OR (hia_pdio_r OR hia_ndio_r)))
+//tndiff_woR = tndiff_all INTERACT all_woR_form
+tndiff = copy tndiff_all //tndiff_all NOT ( tndiff_woR OR tndiff_cut )
+
+//
+pplug1 = tpdiff1 AND psub 
+pplug2a = pplug1 AND plug_sel 
+tcddmy_1 = ICOVL OR TCDDMY_H 
+tcddmy_all = tcddmy_1 OR TCDDMY_V 
+pplug2 = pplug2a NOT tcddmy_all 
+pplug_dmy1 = pplug1 NOT pplug2 
+pplug_dmy = pplug_dmy1 NOT INTERACT psubband 
+tpdiff_dmy1 = tpdiff1 INTERACT pplug_dmy 
+vargt1_p = gatennw AND pgate_imp 
+vargt2_p = vargt1_p AND VAR_noRF 
+VAR_RF1 = VAR AND RFDMY 
+VAR_RF = VAR_RF1 INTERACT gate_a 
+var_pw_rf1a = VAR_RF NOT nxwell 
+var_pw_rf1b = var_pw_rf1a AND pgate_imp 
+vargt_p_all = vargt2_p OR var_pw_rf1b 
+tpdiff_dmy = tpdiff_dmy1 NOT INTERACT vargt_p_all
+tpdiff_all = tpdiff1 NOT tpdiff_dmy 
+tpdiff = copy tpdiff_all //tpdiff_all NOT ( tpdiff_woR OR tpdiff_cut )
+
+//* Define device -- MN(nch_18_mac)
+DEVICE MN(nch_18_mac) ngate_18_mac ngate_18_mac(G) tndiff(S) tndiff(D) psub(B) <nthin> [
+  property W,L,AS,AD
+   W=(perimeter_coincide(ngate_18_mac, tndiff ) + perimeter_inside(ngate_18_mac, tndiff)) / 2
+   L=area(ngate_18_mac) / W
+  PI_S_OD = perimeter_inside(S,nthin)
+  PI_D_OD = perimeter_inside(D,nthin)
+  IF(PI_S_OD ==0) {
+    AD = area(D) * W /PI_D_OD
+    AS = AD
+  }
+  ELSE IF(PI_D_OD==0) {
+    AS = area(S) * W /PI_S_OD
+    AD = AS  }
+  ELSE {
+  AS = area(S) * W /perimeter_inside(S,nthin)
+  AD = area(D) * W /perimeter_inside(D,nthin)
+  }
+  ]
+
+//***** Define connectivity/via layer -- psub ****
+ppsub1 = BULK NOT NW 
+ppsub = ppsub1 NOT NWLVT  //  define total p_sub region
+psub2s = SIZE PSUB2 BY 0.01 
+psubband = psub2s NOT PSUB2  //   psub separator band (doughnut).
+psub = ppsub NOT psubband
+
+//*****Definr connectivity/Via layer -- odCont ***
+odCont1 = CO INTERACT OD 
+p3Cont = CO INTERACT p3 
+odCont = odCont1 NOT p3Cont
+
+//***** Define connectivity/via layer -- n_odCont ****
+p_odCont = odCont AND PP 
+n_odCont = odCont NOT p_odCont 
+
+//***** Define connectivity/via layer -- n_polyCont ****
+n_polyCont = polyCont NOT p_polyCont 
+
+//***** Define connectivity/via layer -- p_polyCont ****
+p_polyCont = polyCont AND PP
+
+//***** Define connectivity/via layer -- polyCont ****
+polyCont = CO INTERACT POx 
+
+//******* Text layer *******
+TEXT LAYER 131 ATTACH 131 M1
+PORT LAYER TEXT 131
+TEXT LAYER 149 ATTACH 149 n_poly
+PORT LAYER TEXT 149
+
+//* Define device -- xdev rm1w
+metal1i = M1i OR DUM1  // ALL metal pattern
+M1X = metal1i OR CO 
+mt1resa = M1X AND RMDMY1  //  M1 resistor
+mt1res = mt1resa INTERACT M1i 
+
+//***** Define connectivity/via layer -- M1 ****
+metal1a = M1X NOT mt1res 
+M1 = COPY metal1a
+
+//***** Define connectivity/via layer -- pplug ****
+pplug_g = pplug2 AND GATED 
+pplug_g_sz = SIZE pplug_g BY -0.001 
+pplug_no_g = pplug2 NOT GATED 
+pplug = pplug_g_sz OR pplug_no_g 
+
+//****** connect the layers*******
+CONNECT M1 tndiff BY n_odCont
+CONNECT M1 tpdiff BY p_odCont
+SCONNECT tpdiff psub BY pplug
+CONNECT ngate_18_mac n_poly
+CONNECT M1 n_poly BY n_polyCont
+CONNECT pplug tpdiff

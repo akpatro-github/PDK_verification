@@ -1,0 +1,103 @@
+//LVS for nmos
+//Environment Setup
+
+//#############################################
+//# MAPPING                                   #
+//#############################################
+
+LAYER OD18            16  //  FOR 1.8V device
+LAYER NP              26  //  N+ S/D Implant
+LAYER ODI             6  //  Active area, thin oxide for device, 
+LAYER CO              30  //  Contact Window
+LAYER POI             17  //  Gate poly, poly Si
+LAYER DPO            318 
+LAYER MAP 17 DATATYPE 1 318 //  Dummy PO
+LAYER M1i             31  //  M1
+LAYER PP              25  //  P+ S/D Implant
+
+//Form BULK layer
+DRC:1 = EXTENT
+BULK  = SIZE DRC:1 BY 0.005
+
+//***** Define connectivity/via layer -- p_poly ****
+p_poly_org = POI AND PP 
+n_poly = POI NOT p_poly_org 
+ 
+//*****Define Gate -- nmos nch_18_mac
+diff = ODI INTERACT CO 
+dumpo1 = POI INSIDE diff 
+dumpo2 = dumpo1 NOT INTERACT CO 
+realpo = POI NOT dumpo2
+gate = realpo AND diff
+tngate1 = gate AND NP
+ngate_18_mac = tngate1 AND OD18 // Gate Terminal of NMOS
+
+//* Define device -- tndiff
+nthin = diff AND NP 
+tndiff = nthin NOT gate 
+
+//* Define device -- tpdiff
+pthin = diff AND PP  //  define P+ thin oxide
+tpdiff1 = pthin NOT gate 
+
+// Plug_sel
+plug_sel1 = tndiff OR tpdiff1 
+tioda = diff NOT tpdiff1 
+tiodb = tioda NOT tndiff 
+tiod = tiodb NOT POI
+plug_sel2 = plug_sel1 OR tiod 
+plug_sel = plug_sel2 INTERACT CO  //  plug select layers
+
+//
+pplug1 = tpdiff1 AND psub 
+pplug2 = pplug1 AND plug_sel 
+pplug_dmy = pplug1 NOT pplug2 
+tpdiff_dmy = tpdiff1 INTERACT pplug_dmy 
+tpdiff = tpdiff1 NOT tpdiff_dmy 
+
+//* Define device -- MN(nch_18_mac)
+DEVICE MN(nch_18_mac) ngate_18_mac ngate_18_mac(G) tndiff(S) tndiff(D) psub(B) <nthin> [
+  property W,L
+   W=perimeter_coincide(ngate_18_mac, tndiff ) / 2
+   L=area(ngate_18_mac) / W
+  ]
+
+//***** Define connectivity/via layer -- psub ****
+psub = copy BULK 
+
+//*****Definr connectivity/Via layer -- odCont ***
+odCont = CO INTERACT ODI 
+
+//***** Define connectivity/via layer -- n_odCont ****
+p_odCont = odCont AND PP 
+n_odCont = odCont NOT p_odCont 
+
+//***** Define connectivity/via layer -- n_polyCont ****
+n_polyCont = polyCont NOT p_polyCont 
+
+//***** Define connectivity/via layer -- p_polyCont ****
+p_polyCont = polyCont AND PP
+
+//***** Define connectivity/via layer -- polyCont ****
+polyCont = CO INTERACT POI 
+
+//******* Text layer *******
+TEXT LAYER 131 ATTACH 131 M1
+PORT LAYER TEXT 131
+//TEXT LAYER 149 ATTACH 149 n_poly
+//PORT LAYER TEXT 149
+
+//* Define device -- xdev rm1w
+M1 = M1i OR CO 
+
+//***** Define connectivity/via layer -- pplug ****
+//pplug = copy pplug2
+
+//****** connect the layers*******
+CONNECT M1 tndiff BY n_odCont
+CONNECT M1 tpdiff BY p_odCont
+CONNECT tpdiff psub
+//SCONNECT tpdiff psub BY pplug
+CONNECT ngate_18_mac n_poly
+CONNECT M1 n_poly BY n_polyCont
+//CONNECT pplug tpdiff

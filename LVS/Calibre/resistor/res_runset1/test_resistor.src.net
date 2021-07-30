@@ -1,0 +1,28 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ROD
+* Top Cell Name: test_resistor
+* View Name:     schematic
+* Netlisted on:  Jul 29 13:55:18 2021
+************************************************************************
+
+.INCLUDE  /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/../Calibre/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ROD
+* Cell Name:    test_resistor
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT test_resistor agnd avdd
+*.PININFO agnd:B avdd:B
+XR0 avdd agnd rupolym l=10u w=2u m=1
+.ENDS
+
