@@ -5,34 +5,25 @@ Program   : @(#)$CDS: strmout version 6.1.8-64b 10/08/2019 19:40 (ip-172-18-22-5
 Started at: 23-Jul-2021  13:20:16
 User Name : akumar
 Host Name : VLSI-SRV-002
-Directory : /home/NIS/projects/AMPERE/REV1/work/akumar
+Directory : ../akumar
 CADENCE Design Systems, Inc.
 ********************************************************************************
 Info: Cellview Rev Num:99,  Tech Rev Num:59
 
-WARNING (XSTRM-20): Output Stream file '/home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1/test_inv.calibre.db' already exists. It will be overwritten.
-INFO (XSTRM-217): Reading the layer map file, /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/tsmcN28.layermap
-INFO (XSTRM-162): You have not used the viaMap option. If the OpenAccess design has native oaVia instances, use the -viaMap option for preserving oaVia instances in a Stream Out - Stream In round trip. Using the -viaMap option improves performance and VM usage of applications using the Streamed-In design.  For details on the viaMap option, refer to the "Design Data Translator's Reference" guide for XStream.
 
 Summary of Options :
 library                                 ROD
-strmFile                                /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1/test_inv.calibre.db
+strmFile                                ../test_inv.calibre.db
 topCell                                 test_inv
 view                                    layout
-runDir                                  /home/NIS/projects/AMPERE/REV1/work/akumar/ajit_lvs/inverter/inv_test1/
+runDir                                  ../inv_test1/
 logFile                                 PIPO.LOG.test_inv
 summaryFile                             PIPO.SUM.test_inv
-layerMap                                /PDK/TSMC/28HPC-PLUS-RF/PDK/TSMC-iPDK/tsmcN28/tsmcN28.layermap
+layerMap                                cmos.layermap
 case                                    Preserve
 convertDot                              node
 convertPcellPin                         geometry
 
-INFO (XSTRM-223): 1. Translating stdVia tsmcN28/M1_OD/layout as STRUCTURE M1_OD_CDNS_627026616760.
-INFO (XSTRM-223): 2. Translating cellView tsmcN28/nch_18_mac/layout as STRUCTURE nch_18_mac_CDNS_627026616760.
-WARNING (XSTRM-35): The objects in the layer-purpose pair 'instance:drawing' are ignored. This is because the layer-purpose pair used in the design is not specified in the layer map file. Specify the layer-purpose pair in the layer map file and try again.
-INFO (XSTRM-223): 3. Translating cellView tsmcN28/pch_18_mac/layout as STRUCTURE pch_18_mac_CDNS_627026616761.
-INFO (XSTRM-223): 4. Translating cellView ROD/test_inv/layout as STRUCTURE test_inv.
-INFO (XSTRM-180): You have not used the objectMap option. The design has instance(s) of at least one of following OpenAccess objects: oaBlockage, oaBoundary, oaRow, and oaMarker. Any information about these objects will not be translated into the generated stream file. Use the objectMap option to translate/preserve these objects using XStream. For details on the objectMap option, refer to the "Design Data Translator's Reference" guide for XStream.
 
 Summary of Objects Translated:
 	Scalar Instances:                       2
