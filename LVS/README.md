@@ -26,9 +26,9 @@
 
 |<img title="Layer operation" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/layer_operation.png">|
 |:--:|
-|*Figure 4: Layer Operations*|
+|*Figure 5: Layer Operations*|
 
 ### Connectivity
 |<img title="Connectivity" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connectivity.png">|
 |:--:|
-|*Figure 4: Connectivity*|
+|*Figure 6: Connectivity*|
