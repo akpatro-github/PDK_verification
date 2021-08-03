@@ -5,7 +5,7 @@
 |*Figure 1: Block Diagram of LVS Flow*|
 
 ## Input Files
-* Rule File:- A SVRF pr TVF code which contains the information of Layers, Devices and connectivity.
+* Rule File:- A SVRF or TVF code which contains the information of Layers, Devices and connectivity.
 * Layout Database :- An Extracted report from Layout (.db/,gds format)
 * Source Database:- An Extracted Netlist Report from Schematic (.cdl/.net format)
 
