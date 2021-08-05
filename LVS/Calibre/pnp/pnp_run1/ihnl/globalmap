@@ -1,8 +1,0 @@
-CADENCE IHNL11140
-$model
-ROD/test_pnp/schematic test_pnp
-$endmodel
-$net
-$endnet
-$param
-$endparam

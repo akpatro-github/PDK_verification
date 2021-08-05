@@ -1,8 +1,0 @@
-CADENCE IHNL11140
-$model
-ROD/test_cap/schematic test_cap
-$endmodel
-$net
-$endnet
-$param
-$endparam

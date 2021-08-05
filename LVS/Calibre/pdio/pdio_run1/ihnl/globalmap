@@ -1,8 +1,0 @@
-CADENCE IHNL11140
-$model
-ROD/test_pdio/schematic test_pdio
-$endmodel
-$net
-$endnet
-$param
-$endparam
