@@ -28,6 +28,7 @@
 	-  `k` - for the ruler.
 	-  `o` - for the via.
 	-  `q` - To see the property.
+	-  `l` - Label
 
 ## Verification 
 ### DRC Verification
