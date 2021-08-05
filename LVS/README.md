@@ -112,5 +112,6 @@ A bunch of commands are used to perform the layer operations. Some of them are m
   * Format : Syntax 1: `connect layer1 [later N...] [Direct / Mask]`
              Syntax 2: `connect layer1 [layer N...] By layerC
 * Example
-|<img title="Setup" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connect1.png">|
-|<img title="Setup" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connect2.png">|
+
+|<img title="connect1" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connect1.png">|
+|<img title="connect2" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connect2.png">|
