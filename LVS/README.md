@@ -107,3 +107,10 @@ A bunch of commands are used to perform the layer operations. Some of them are m
 |<img title="Connectivity" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connectivity.png">|
 |:--:|
 |*Figure 6: Connectivity*|
+
+* Connect : Defines electrical connection onn input layers
+  * Format : Syntax 1: `connect layer1 [later N...] [Direct / Mask]`
+             Syntax 2: `connect layer1 [layer N...] By layerC
+* Example
+|<img title="Setup" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connect1.png">|
+|<img title="Setup" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connect2.png">|
