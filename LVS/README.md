@@ -16,6 +16,11 @@
 |:--:|
 |*Figure 2: Setup*|
 ### Device
+* Device : Defines devices and calculates properties for circuit extraction.
+* Format : Syntax : `DEVice {element_name [‘(’model_name‘)’]} device_layer {{pin_layer[‘(’pin_name‘)’]} …}`
+* Example
+ <img title="Define Device" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/device1.png">
+
 |<img title="Define Device" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/device.png">|
 |:--:|
 |*Figure 3: Device Defined*|
