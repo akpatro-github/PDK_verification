@@ -1,6 +1,6 @@
 hnlLastStopCellInfo = '(
-                           ( "tsmcN28" "nch_18_mac" "auCdl" "78" "1614166677" )
-                          ( "tsmcN28" "pch_18_mac" "auCdl" "72" "1614166677" )
+                           ( "gpdk" "nch_18_mac" "auCdl" "78" "1614166677" )
+                          ( "gpdk" "pch_18_mac" "auCdl" "72" "1614166677" )
                        )
 hnlLastMaxNameLength = 60
 hnlLastNamePrefix = "hnl_"
