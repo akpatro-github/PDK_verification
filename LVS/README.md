@@ -19,7 +19,10 @@
 |<img title="Define Device" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/device.png">|
 |:--:|
 |*Figure 3: Device Defined*|
-### Layers and Layer Operations
+### Layers Defined
+|<img title="Define layer" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/layer.png">|
+|:--:|
+|*Figure 4: Layer Defined*|
 * LAYER: Defines the name of an original layer or a layer set that Calibre uses. 
    * Format:- `LAYER name original_layer` where,
       * `name`: A required name for an original layer or layer set. 
@@ -44,11 +47,10 @@
    * Format:- `PORT LAYER TEXT layer`, where
        * layer: A required layer name or number that can be treated as port. 
    * Example:- `PORT LAYER TEXT MET1_TEXT` :- specifies Metal1 text layer to be treated as a port.
-
-
-|<img title="Define layer" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/layer.png">|
+### Layer Operation
+|<img title="Layer operation" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/layer_operation.png">|
 |:--:|
-|*Figure 4: Layer Defined*|
+|*Figure 5: Layer Operations*|
 
 A bunch of commands are used to perform the layer operations. Some of them are mentioned below:
 * AND : Constructs the intersection regions of polygons on the input layer(s) and outputs the intersections as polygons.
@@ -99,9 +101,7 @@ A bunch of commands are used to perform the layer operations. Some of them are m
          * Note that layer met plays no role in deriving bulk in this rule file, because met is not needed in a rule check.
        ![EXTENT_2](https://github.com/prachi-mrudula/verification/blob/main/LVS/images/EXTENT_2.png)
 
-|<img title="Layer operation" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/layer_operation.png">|
-|:--:|
-|*Figure 5: Layer Operations*|
+
 
 ### Connectivity
 |<img title="Connectivity" src="https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/Diagrams/connectivity.png">|
