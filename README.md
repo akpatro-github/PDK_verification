@@ -28,6 +28,7 @@
 	-  `k` - for the ruler.
 	-  `o` - for the via.
 	-  `q` - To see the property.
+	-  `l` - To create label
 
 ## Verification 
 ### DRC Verification
@@ -40,7 +41,7 @@
 * To run LVS click `Run` and check all the rules.
 
 ## Verification using batch mode
-* For Verification need 3 files
+* For Verification, we need 3 files
 	- .cdl format of Schematic
 	- .gds format of layout
 	- DRC/LVS Rule deck
@@ -51,19 +52,19 @@
 
 * Mention your .cdl and .gds path in Rule Deck file as follows
 
-`LAYOUT PRIMARY "test_nmos_nf"`
+```sh
+LAYOUT PRIMARY "test_nmos_nf"
+LAYOUT PATH "test_nmos.calibre.db"
+LAYOUT SYSTEM GDSII
+```
 
-`LAYOUT PATH "test_nmos.calibre.db"`
-
-`LAYOUT SYSTEM GDSII`
-
-`SOURCE PRIMARY "test_nmos_nf"`
-
-`SOURCE PATH "test_nmos.src.cdl"`
-
-`SOURCE SYSTEM SPICE`
+```sh
+SOURCE PRIMARY "test_nmos_nf"
+SOURCE PATH "test_nmos.src.cdl"
+SOURCE SYSTEM SPICE
+```
 
 #### Run DRC/LVS ruldeck 
 * For LVS, in the terminal type `calibre -lvs file_name`
-* For DRC, in the terminal type `calibre -drc file_name`(.cdl is not needed for DRC)
-* [Type Here](https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/nmos/cmd_run/nmos.lvs) to refer the ruledeck
+* For DRC, in the terminal type `calibre -drc file_name` (.cdl is not needed for DRC)
+* [Click Here](https://github.com/akpatro-github/Verification-LVS/blob/main/LVS/Calibre/nmos/cmd_run/nmos.lvs) to refer the example ruledeck.
